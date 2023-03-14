@@ -1,14 +1,14 @@
-import 'dart:io';
 
 import 'package:finews_api/news/news_api.dart';
 import 'package:finews_api/pigeon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
-  if (Platform.isAndroid) {
-    // Intialize flutter
+    // Initialize flutter
     WidgetsFlutterBinding.ensureInitialized();
-    print("init flutter");
+    String buildMode = kReleaseMode ? "release" : kProfileMode ? "profile" : "debug";
+    print("Flutter running in $buildMode mode.");
+
     FlutterNewsApi.setup(NewsApi());
-  }
 }
