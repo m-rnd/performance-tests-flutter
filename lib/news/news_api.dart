@@ -1,6 +1,8 @@
 import 'package:finews_api/pigeon.dart';
 import 'package:finews_api/rest_service/api_service.dart';
 
+import 'package:signposts/signposts.dart' as signposts;
+
 class NewsApi implements FlutterNewsApi {
   final ApiService _api = ApiService();
 
@@ -8,7 +10,13 @@ class NewsApi implements FlutterNewsApi {
   Future<List<FlutterApiNewsEntity?>> getNews() async {
     final jsonNews = await _api.getNews();
     if (jsonNews == null) return [];
-    return (jsonNews as List<dynamic>).map((e) => fromJSON(e)).toList();
+
+    // Umwandlung von JSON zu Dart Objekt erfolgt hier manuell
+    signposts.Interval interval = signposts.Interval('start getNews.fromJSON');
+    final news = (jsonNews as List<dynamic>).map((e) => fromJSON(e)).toList();
+    interval.end('end getNews.fromJSON');
+
+    return news;
   }
 }
 
